@@ -2,7 +2,7 @@
 
 namespace Laravel\Pulse\Recorders;
 
-use Illuminate\Config\Repository;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Str;
 use Laravel\Pulse\Events\SharedBeat;
 use Laravel\Pulse\Pulse;
@@ -85,7 +85,7 @@ class Servers
                 'cpu' => $cpu,
                 'memory_used' => $memoryUsed,
                 'memory_total' => $memoryTotal,
-                'storage' => collect($this->config->get('pulse.recorders.'.self::class.'.directories')) // @phpstan-ignore argument.templateType argument.templateType
+                'storage' => collect($this->config->get('pulse.recorders.'.self::class.'.directories')) // @phpstan-ignore argument.templateType, argument.templateType
                     ->map(fn (string $directory) => [
                         'directory' => $directory,
                         'total' => $total = intval(round(disk_total_space($directory) / 1024 / 1024)), // MB
